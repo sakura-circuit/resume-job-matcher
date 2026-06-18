@@ -1,10 +1,13 @@
-Python Developer
+Python Backend Developer
 
-Required skills:
-
+Required Skills:
 Python
 FastAPI
 Docker
 AWS
+Kubernetes
 Git
-SQL
+
+Responsibilities:
+Develop REST APIs
+Deploy cloud applications

@@ -14,6 +14,9 @@ from app.skill_matcher import (
     get_missing_skills
 )
 
+from app.ai_analyzer import analyze_resume
+from app.models import AIAnalysisResponse
+
 
 app = FastAPI()
 
@@ -68,6 +71,51 @@ async def match_resume(
             score=score,
             matching_skills=sorted(list(matching)),
             missing_skills=sorted(list(missing))
+        )
+    
+    finally:
+        Path(pdf_path).unlink(
+            missing_ok=True
+        )
+
+
+@app.post(
+    "/ai-match",
+    response_model=AIAnalysisResponse
+)
+async def ai_match_resume(
+    resume: UploadFile = File(...),
+    job_description: UploadFile = File(...)
+):
+    
+    with NamedTemporaryFile(
+        delete=False,
+        suffix=".pdf"
+    ) as temp_file:
+        
+        temp_file.write(
+            await resume.read()
+        )
+
+        pdf_path = temp_file.name
+
+    try:
+
+        resume_text = extract_text(
+            pdf_path
+        )
+
+        job_text = (
+            await job_description.read()
+        ).decode("utf-8")
+
+        analysis = analyze_resume(
+            resume_text,
+            job_text
+        )
+
+        return AIAnalysisResponse(
+            **analysis
         )
     
     finally:

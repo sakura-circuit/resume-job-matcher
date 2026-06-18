@@ -1,141 +1,196 @@
-# Resume ↔ Job Matcher
+# Resume Job Matcher
 
-## Overview
+AI-powered resume analysis tool built with FastAPI and Ollama.
 
-**Resume ↔ Job Matcher** is an AI-powered application that compares a candidate's resume with a job description and generates a compatibility score along with actionable recommendations.
+The application compares a candidate's resume against a job description and generates:
 
----
-
-## Project Goal
-
-The objective is to build a production-style application that helps candidates understand how well their resume matches a specific job posting.
-
-### Features
-
-- Upload Resume (PDF)
-- Upload Job Description (TXT or PDF)
-- Extract and process text
-- Identify and compare skills
-- Calculate a match score
-- Generate AI-powered recommendations using an LLM
-- Return structured JSON responses
-- Expose functionality through a FastAPI REST API
+- Match score (0-100)
+- Strengths
+- Missing skills
+- Improvement recommendations
+- AI-generated reasoning
 
 ---
 
-## Project Structure
+## Features
 
-```text
-resume-job-matcher/
-│
-├── app/
-│   ├── main.py
-│   ├── pdf_reader.py
-│   ├── skill_matcher.py
-│   └── models.py
-│
-├── tests/
-│   └── test_skill_matcher.py
-│
-├── requirements.txt
-├── README.md
-└── .gitignore
-```
+### Traditional Skill Matching
+
+- PDF resume upload
+- Job description upload
+- Skill extraction
+- Match score calculation
+- Missing skill detection
+
+### AI-Powered Analysis
+
+- Resume analysis using a local LLM
+- Structured JSON output
+- Recruiter-style feedback
+- Actionable recommendations
 
 ---
 
-## Getting Started
+## Example Response
 
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/resume-job-matcher.git
-
-cd resume-job-matcher
-```
-
-### 2. Create a Virtual Environment
-
-```bash
-python -m venv .venv
-```
-
-#### Activate the Environment
-
-**Windows**
-
-```bash
-.venv\Scripts\activate
-```
-
-**Linux / macOS**
-
-```bash
-source .venv/bin/activate
-```
-
----
-
-### 3. Install Dependencies
-
-```bash
-pip install fastapi uvicorn pdfplumber pytest
-```
-
-Save dependencies:
-
-```bash
-pip freeze > requirements.txt
+```json
+{
+  "match_score": 80,
+  "reasoning": "Candidate has strong backend development experience and matches most required skills. AWS and Kubernetes are missing.",
+  "strengths": ["Python", "FastAPI", "Docker"],
+  "missing_skills": ["AWS", "Kubernetes"],
+  "recommendations": ["Add AWS projects", "Learn Kubernetes fundamentals"]
+}
 ```
 
 ---
 
 ## Technology Stack
 
-| Category         | Technology                        |
-| ---------------- | --------------------------------- |
-| Language         | Python 3.11+                      |
-| API Framework    | FastAPI                           |
-| PDF Processing   | pdfplumber                        |
-| Testing          | pytest                            |
-| Server           | Uvicorn                           |
-| AI Integration   | OpenAI / Local LLM (future phase) |
-| Containerization | Docker (future phase)             |
+- Python 3.12
+- FastAPI
+- Pydantic
+- pdfplumber
+- Ollama
+- Qwen 2.5
+- pytest
+- Uvicorn
 
 ---
 
-## Example Workflow
+## API Endpoints
 
-1. Upload a resume PDF
-2. Upload a job description
-3. Extract text from both documents
-4. Identify relevant skills and keywords
-5. Compute similarity score
-6. Generate AI recommendations
-7. Return structured JSON output
+### Health Check
 
-Example response:
+```http
+GET /
+```
+
+Response:
 
 ```json
 {
-  "match_score": 82,
-  "matching_skills": ["Python", "FastAPI", "Docker"],
-  "missing_skills": ["Kubernetes", "AWS"],
-  "recommendations": [
-    "Add cloud experience examples",
-    "Highlight containerization projects"
-  ]
+  "project": "Resume Job Matcher",
+  "status": "running"
 }
 ```
+
+### Traditional Matching
+
+```http
+POST /match
+```
+
+Returns:
+
+- Match score
+- Matching skills
+- Missing skills
+
+### AI Matching
+
+```http
+POST /ai-match
+```
+
+Returns:
+
+- Match score
+- Reasoning
+- Strengths
+- Missing skills
+- Recommendations
+
+---
+
+## Running Locally
+
+### Clone Repository
+
+```bash
+git clone <repository-url>
+cd resume-job-matcher
+```
+
+### Create Virtual Environment
+
+```bash
+python -m venv .venv
+```
+
+Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+Linux/macOS:
+
+```bash
+source .venv/bin/activate
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Start Ollama
+
+```bash
+ollama serve
+```
+
+### Download Model
+
+```bash
+ollama pull qwen2.5:7b
+```
+
+### Start Application
+
+```bash
+uvicorn app.main:app --reload
+```
+
+### Swagger UI
+
+Open:
+
+http://127.0.0.1:8000/docs
 
 ---
 
 ## Testing
-
-Run unit tests:
 
 ```bash
 pytest
 ```
 
 ---
+
+## Future Improvements
+
+- Support multiple LLM providers
+- Docker deployment
+- GitHub Actions CI/CD
+- Resume scoring history
+- Vector search for semantic matching
+- RAG-based job analysis
+
+---
+
+## Why This Project
+
+This project demonstrates:
+
+- Python backend development
+- REST API design
+- AI integration
+- PDF processing
+- Structured LLM outputs
+- Testing
+- Software architecture
+
+Suitable as a portfolio project for Python Backend, AI Engineer and Generative AI Developer roles.
