@@ -1,0 +1,9 @@
+John Doe
+
+Skills:
+
+Python
+Docker
+Git
+Linux
+SQL

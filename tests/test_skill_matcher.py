@@ -14,7 +14,7 @@ def test_extract_skills():
     assert "python" in result
     assert "docker" in result
 
-def text_match_score():
+def test_match_score():
 
     resume = {"python", "docker"}
 

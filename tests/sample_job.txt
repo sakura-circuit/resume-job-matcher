@@ -1,0 +1,10 @@
+Python Developer
+
+Required skills:
+
+Python
+FastAPI
+Docker
+AWS
+Git
+SQL

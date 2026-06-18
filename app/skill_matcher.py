@@ -14,13 +14,23 @@ SKILLS = {
 def extract_skills(text: str) -> set[str]:
     text = text.lower()
 
-    found = set()
+    return {
+        skill
+        for skill in SKILLS
+        if skill in text
+    }
 
-    for skill in SKILLS:
-        if skill in text:
-            found.add(skill)
+def get_matching_skills(
+        resume_skills: set[str],
+        job_skills: set[str]
+) -> set[str]:
+    return resume_skills.intersection(job_skills)
 
-    return found
+def get_missing_skills(
+        resume_skills: set[str],
+        job_skills: set[str]
+) -> set[str]:
+    return job_skills - resume_skills
 
 def calculate_match_score(
         resume_skills: set[str],
@@ -30,7 +40,7 @@ def calculate_match_score(
     if not job_skills:
         return 0.0
     
-    matches = resume_skills.intersection(job_skills)
+    matches = get_matching_skills(resume_skills, job_skills)
 
     return round(
         len(matches) / len(job_skills) * 100, 2
