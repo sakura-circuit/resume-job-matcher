@@ -1,6 +1,8 @@
 # Resume Job Matcher
 
-AI-powered resume analysis tool built with FastAPI and Ollama.
+AI-powered resume analysis tool built with FastAPI and Large Language Models (LLMs).
+
+The application supports both local LLMs via Ollama and cloud-hosted LLMs via Groq.
 
 The application compares a candidate's resume against a job description and generates:
 
@@ -24,7 +26,8 @@ The application compares a candidate's resume against a job description and gene
 
 ### AI-Powered Analysis
 
-- Resume analysis using a local LLM
+- Resume analysis using local or cloud-hosted LLMs
+- Configurable AI provider selection
 - Structured JSON output
 - Recruiter-style feedback
 - Actionable recommendations
@@ -52,7 +55,9 @@ The application compares a candidate's resume against a job description and gene
 - Pydantic
 - pdfplumber
 - Ollama
+- Groq
 - Qwen 2.5
+- Llama 3.3
 - pytest
 - Uvicorn
 
@@ -172,12 +177,12 @@ pytest
 
 ## Future Improvements
 
-- Support multiple LLM providers
 - Docker deployment
 - GitHub Actions CI/CD
 - Resume scoring history
-- Vector search for semantic matching
+- Resume-to-job semantic matching using embeddings
 - RAG-based job analysis
+- Frontend dashboard
 
 ---
 
@@ -194,3 +199,35 @@ This project demonstrates:
 - Software architecture
 
 Suitable as a portfolio project for Python Backend, AI Engineer and Generative AI Developer roles.
+
+## Configuration
+
+Create a `.env` file in the project root.
+
+Example:
+
+```env
+# AI provider: ollama | groq
+
+AI_PROVIDER=ollama
+
+# Ollama settings
+OLLAMA_MODEL=qwen2.5:7b
+
+# Groq settings
+GROQ_API_KEY=your_api_key_here
+```
+
+### Using Ollama
+
+```env
+AI_PROVIDER=ollama
+OLLAMA_MODEL=qwen2.5:7b
+```
+
+### Using Groq
+
+```env
+AI_PROVIDER=groq
+GROQ_API_KEY=your_api_key_here
+```
